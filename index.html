@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en" aria-label="Babelfish Application">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Babelfish - Wordly Translator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="login-page" class="page active">
+        <div class="card">
+            <h1>Wordly Translator</h1>
+            <p class="instructions">
+                Enter the session credentials for both channels to begin.
+            </p>
+            <form id="login-form">
+                <div class="form-grid-dual">
+                    <fieldset class="session-fieldset">
+                        <legend>Session A</legend>
+                        <div class="form-group">
+                            <label for="session-id-a">Session ID (A):</label>
+                            <input type="text" id="session-id-a" placeholder="XXXX-0000" required aria-required="true">
+                        </div>
+                        <div class="form-group">
+                            <label for="passcode-a">Passcode (A):</label>
+                            <input type="text" id="passcode-a" placeholder="Required presenter passcode" required aria-required="true">
+                        </div>
+                    </fieldset>
+
+                    <fieldset class="session-fieldset">
+                        <legend>Session B</legend>
+                        <div class="form-group">
+                            <label for="session-id-b">Session ID (B):</label>
+                            <input type="text" id="session-id-b" placeholder="YYYY-1111" required aria-required="true">
+                        </div>
+                        <div class="form-group">
+                            <label for="passcode-b">Passcode (B):</label>
+                            <input type="text" id="passcode-b" placeholder="Required presenter passcode" required aria-required="true">
+                        </div>
+                    </fieldset>
+                </div>
+                <button type="submit" class="btn btn-primary">Load Sessions & Devices</button>
+                <div class="status-message" id="login-status" role="alert"></div>
+            </form>
+        </div>
+    </div>
+
+    <div id="app-page" class="page">
+        <header>
+            <h1>Babelfish</h1>
+            <div class="session-info">
+                <span id="session-id-display-a"></span>
+                <span id="session-id-display-b"></span>
+                <button id="refresh-devices-btn" class="btn btn-secondary" title="Refresh device lists">&#x21BB; Refresh Audio Devices</button>
+                <button id="end-session-btn" class="btn btn-danger" title="End Both Sessions for All">End Sessions</button>
+            </div>
+        </header>
+
+        <main class="main-dual-channel">
+            <div id="channel-a" class="session-panel">
+                <div class="session-header">
+                    <div class="session-title">
+                        <h2>Channel A</h2>
+                    </div>
+                    <div class="session-controls">
+                         <button id="mute-btn-a" class="btn btn-secondary" disabled>Mute</button>
+                         <button id="connection-toggle-btn-a" class="btn btn-connect" aria-live="polite" data-channel="a">Join</button>
+                    </div>
+                </div>
+                 <div class="session-status-grid">
+                     <div class="status-item">
+                         <span id="status-light-present-a" class="session-status-light disconnected"></span>
+                         <span>Mic (Sending)</span>
+                     </div>
+                     <div class="status-item">
+                         <span id="status-light-attend-a" class="session-status-light disconnected"></span>
+                         <span>Audio (Receiving)</span>
+                     </div>
+                 </div>
+                <div class="session-settings">
+                    <div class="setting-group">
+                        <label for="input-device-select-a" class="setting-label">1. Input Mic:</label>
+                        <select class="setting-select" id="input-device-select-a" aria-label="Select input microphone for channel A"></select>
+                    </div>
+                    <div class="setting-group">
+                        <label for="source-language-select-a" class="setting-label">2. Spoken Lang:</label>
+                        <select class="setting-select" id="source-language-select-a" aria-label="Select spoken language for channel A"></select>
+                    </div>
+                     <div class="setting-group">
+                        <label for="target-language-select-a" class="setting-label">3. Translate To:</label>
+                        <select class="setting-select" id="target-language-select-a" aria-label="Select language to translate to for channel A"></select>
+                    </div>
+                    <div class="setting-group">
+                        <label for="output-device-select-a" class="setting-label">4. Output Spkr:</label>
+                        <select class="setting-select" id="output-device-select-a" aria-label="Select output speaker for channel A"></select>
+                    </div>
+                </div>
+                 <div class="session-content">
+                     <div class="session-transcript-container" aria-live="polite">
+                         <div class="session-transcript" id="transcript-a"></div>
+                     </div>
+                 </div>
+            </div>
+
+            <div id="channel-b" class="session-panel">
+                <div class="session-header">
+                    <div class="session-title">
+                        <h2>Channel B</h2>
+                    </div>
+                    <div class="session-controls">
+                        <button id="mute-btn-b" class="btn btn-secondary" disabled>Mute</button>
+                        <button id="connection-toggle-btn-b" class="btn btn-connect" aria-live="polite" data-channel="b">Join</button>
+                    </div>
+                </div>
+                 <div class="session-status-grid">
+                     <div class="status-item">
+                         <span id="status-light-present-b" class="session-status-light disconnected"></span>
+                         <span>Mic (Sending)</span>
+                     </div>
+                     <div class="status-item">
+                         <span id="status-light-attend-b" class="session-status-light disconnected"></span>
+                         <span>Audio (Receiving)</span>
+                     </div>
+                 </div>
+                <div class="session-settings">
+                    <div class="setting-group">
+                        <label for="input-device-select-b" class="setting-label">1. Input Mic:</label>
+                        <select class="setting-select" id="input-device-select-b" aria-label="Select input microphone for channel B"></select>
+                    </div>
+                    <div class="setting-group">
+                        <label for="source-language-select-b" class="setting-label">2. Spoken Lang:</label>
+                        <select class="setting-select" id="source-language-select-b" aria-label="Select spoken language for channel B"></select>
+                    </div>
+                     <div class="setting-group">
+                        <label for="target-language-select-b" class="setting-label">3. Translate To:</label>
+                        <select class="setting-select" id="target-language-select-b" aria-label="Select language to translate to for channel B"></select>
+                    </div>
+                    <div class="setting-group">
+                        <label for="output-device-select-b" class="setting-label">4. Output Spkr:</label>
+                        <select class="setting-select" id="output-device-select-b" aria-label="Select output speaker for channel B"></select>
+                    </div>
+                </div>
+                 <div class="session-content">
+                     <div class="session-transcript-container" aria-live="polite">
+                         <div class="session-transcript" id="transcript-b"></div>
+                     </div>
+                 </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
